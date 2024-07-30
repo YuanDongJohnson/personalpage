@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老吳動物模型手工坊</title>
+<style>
+  body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #FFC0CB; /* 浅红色背景 */
+      text-align: center; /* 页面内容居中 */
+    }
+    .header {
+      background: #222; /* 深色背景以增加对比度 */
+      color: #ffffff;
+      padding: 20px 0;
+      font-size: 18px; /* 增大标题字体大小 */    
+    }
+    .container {
+      padding: 20px;
+    }
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .image-group {
+      cursor: pointer;
+      margin-bottom: 10px; /* 图片之间的间距 */
+      display: inline-block; /* 使图片可以设置宽高 */
+    }
+    .image-group img {
+      width: 200px; /* 图片宽度 */
+      height: 150px; /* 图片高度 */
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .image-group img.expanded {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(2);
+      z-index: 100;
+      pointer-events: none; /* 防止放大的图片影响其他元素的交互 */
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 90;
+    }
+    .contact-info {
+      background: #343a40;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: 30px;
+      border-radius: 0px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>老吳動物模型手工坊</h1>
+    <h2>正宗純手工制造</h2>
+</div>
+
+<div class="container">
+  <div class="gallery">
+    <!-- 图片栏位，由上而下居中排列 -->
+    <div class="image-group"><img src="https://ossk.cc/file/2a4dbce26a0a292ec7b9e.jpg" alt="Animal Image 1" class="image"></div>
+    <div class="image-group"><img src="https://ossk.cc/file/a549d6369564d95293ec4.jpg" alt="Animal Image 2" class="image"></div>
+    <div class="image-group"><img src="https://ossk.cc/file/e6cf2f8f673b22749c289.jpg" alt="Animal Image 3" class="image"></div>
+    <div class="image-group"><img src="https://ossk.cc/file/4d5f87eb47bbbaab727e5.jpg" alt="Animal Image 4" class="image"></div>
+    <div class="image-group"><img src="https://ossk.cc/file/34b9971cb2ee5a952e708.jpg" alt="Animal Image 5" class="image"></div>
+    <div class="image-group"><img src="https://ossk.cc/file/be42fb1e0b378ea613071.jpg" alt="Animal Image 6" class="image"></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="contact-info">
+  <h2>聯繫方式</h2>
+<h2>老吳</h2>
+<p><strong>手機:</strong> <a href="mailto:contact@example.com">contact@example.com</a></p>
+  <p><strong>Line:</strong> <a href="tel:123-456-7890">123-456-7890</a></p>
+</div>
+
+<script>
+  let expandedImg = null;
+  const overlay = document.getElementById('overlay');
+
+  document.querySelectorAll('.image').forEach(img => {
+    img.addEventListener('click', function() {
+      if (expandedImg === this) {
+        // 如果点击的是当前已经放大的图片，则恢复原状
+        this.classList.remove('expanded');
+        expandedImg = null;
+        overlay.style.display = 'none';
+      } else {
+        // 否则，放大图片并显示遮罩层
+        this.classList.add('expanded');
+        expandedImg = this;
+        overlay.style.display = 'block';
+      }
+    });
+  });
+
+  // 点击遮罩层时隐藏放大的图片
+  overlay.addEventListener('click', function() {
+    if (expandedImg) {
+      expandedImg.classList.remove('expanded');
+      expandedImg = null;
+      overlay.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
