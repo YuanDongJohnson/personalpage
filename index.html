@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>老吳動物模型手工坊</title>
 <style>
-  body, html {
+body, html {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -96,6 +96,8 @@
     color: #fff;
     text-decoration: none;
   }
+  /* ... */
+
 </style>
 </head>
 <body>
@@ -122,28 +124,37 @@
     <div class="image-group"><img src="https://ossk.cc/file/be42fb1e0b378ea613071.jpg" alt="Animal Image 6" class="image"></div>
   </div>
 </div>
+</div>
 
-<div class="overlay" id="overlay"></div>
 
+</div>
+ <h2>制作視頻</h2>
+<div style="position:relative; width:60%; height:0px; padding-bottom:100.000%"><iframe allow="fullscreen;autoplay" allowfullscreen height="25%" src="https://streamable.com/e/fzzvlw?autoplay=1" width="60%" style="border:none; width:100%; height:100%; position:absolute; left:85px; top:0px; overflow:hidden;"></iframe></div>
 <div class="contact-info">
   <h2>聯繫方式</h2>
   <h2>老吳</h2>
-  <p><strong>手機:</strong> <a href="tel:123-456-7890">123-456-7890</a></p>
-  <p><strong>Line:</strong> <a href="http://line.me/ti/p/5001120">5001120</a></p>
+  
+  <p><strong>Line:</strong> <a href="https://line.me/ti/p/5001120">5001120</a></p>
   <!-- 确保Line链接是正确的 -->
 </div>
+
+<div class="overlay" id="overlay"></div>
 
 <script>
   // 时钟功能
   function updateDateTime() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    document.getElementById('dateTime').textContent = `${year}-${month}-${day}`;
-  }
-  setInterval(updateDateTime, 1000);
-  updateDateTime(); // 初始化时钟
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  // 格式化日期和时间为 YYYY-MM-DD HH:MM:SS
+  document.getElementById('dateTime').textContent = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+setInterval(updateDateTime, 1000);
+updateDateTime(); // 初始化时钟
 
   // 图片放大功能
   let expandedImg = null;
@@ -168,8 +179,7 @@
       }
     });
   });
-
-  overlay.addEventListener('click', function() {
+overlay.addEventListener('click', function() {
     if (expandedImg) {
       expandedImg.classList.remove('expanded');
       expandedImg.style.transform = '';
@@ -182,6 +192,8 @@
       overlay.style.display = 'none';
     }
   });
+
+
 </script>
 
 </body>
