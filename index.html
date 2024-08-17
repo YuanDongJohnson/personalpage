@@ -43,31 +43,31 @@ overflow-x: hidden;
     line-height: 1.5;
     z-index: 1000;
   }
-  .container {
-    padding: 20px;
+   .carousel {
+    position: relative;
+    width: 220px;
+    height: 180px;
+    margin: 10px;
+    border: 2px solid #000;
+    overflow: hidden;
   }
-  .gallery {
+  .carousel img {
+    width: 220px;
+    height: 180px;
+    display: none;
+  }
+  .carousel img.active {
+    display: block;
+    animation: scaleUp 0.5s ease-in-out;
+  }
+ .gallery {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .image-group {
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  .image-group img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  .image-group img.expanded {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2);
-    z-index: 100;
-    pointer-events: none;
+  @keyframes scaleUp {
+    from { transform: scale(0.5); }
+    to { transform: scale(1); }
   }
   .overlay {
     display: none;
@@ -85,7 +85,7 @@ overflow-x: hidden;
     padding: 20px;
     text-align: center;
     margin-top: 30px;
-    border-radius: 8px;
+    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .contact-info h2 {
@@ -98,9 +98,41 @@ overflow-x: hidden;
     color: #fff;
     text-decoration: none;
   }
+  
+       #waline {
+            width: auto; /* 设置评论容器的宽度 */
+            height: auto; /* 设置评论容器的高度 */
+            margin: 20px  auto; /* 居中显示 */
+            
+        }
+        #waline:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
   /* ... */
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px; /* 根据需要调整 */
+}
+.video-container {
+  position: relative;
+  width: auto;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  margin: auto; /* 居中视频容器 */
+}
 
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 </style>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+    </link>
 </head>
 <body>
 
@@ -113,36 +145,56 @@ overflow-x: hidden;
   <span>今天是</span>
   <span id="dateTime"></span>
 </div>
-
-<div class="container">
+<div class="center-content">
+<div class="carousel">
   <div class="gallery">
-    <!-- 图片栏位，由上而下排列 -->
-    <!-- 替换以下图片路径为您的实际图片路径 -->
-    <div class="image-group"><img src="https://ossk.cc/file/2a4dbce26a0a292ec7b9e.jpg" alt="Animal Image 1" class="image"></div>
-    <div class="image-group"><img src="https://ossk.cc/file/a549d6369564d95293ec4.jpg" alt="Animal Image 2" class="image"></div>
-    <div class="image-group"><img src="https://ossk.cc/file/e6cf2f8f673b22749c289.jpg" alt="Animal Image 3" class="image"></div>
-    <div class="image-group"><img src="https://ossk.cc/file/4d5f87eb47bbbaab727e5.jpg" alt="Animal Image 4" class="image"></div>
-    <div class="image-group"><img src="https://ossk.cc/file/34b9971cb2ee5a952e708.jpg" alt="Animal Image 5" class="image"></div>
-    <div class="image-group"><img src="https://ossk.cc/file/be42fb1e0b378ea613071.jpg" alt="Animal Image 6" class="image"></div>
-  </div>
+  <img src="https://ossk.cc/file/2a4dbce26a0a292ec7b9e.jpg" alt="Image 1" class="active">
+  <img src="https://ossk.cc/file/a549d6369564d95293ec4.jpg" alt="Image 2">
+  <img src="https://ossk.cc/file/e6cf2f8f673b22749c289.jpg" alt="Image 3">
+  <img src="https://ossk.cc/file/4d5f87eb47bbbaab727e5.jpg" alt="Image 4">
+  <img src="https://ossk.cc/file/34b9971cb2ee5a952e708.jpg" alt="Image 5">
+ <img src="https://ossk.cc/file/be42fb1e0b378ea613071.jpg" alt="Image 6">
 </div>
 </div>
 
 
 </div>
  <h2>制作視頻</h2>
-<div style="position:relative; width:60%; height:0px; padding-bottom:100.000%"><iframe allow="fullscreen;autoplay" allowfullscreen height="25%" src="https://streamable.com/e/fzzvlw?autoplay=1" width="60%" style="border:none; width:100%; height:100%; position:absolute; left:85px; top:0px; overflow:hidden;"></iframe></div>
-<div class="contact-info">
- 
-
+<div style="position:relative; width:auto; height:0px; padding-bottom:100.000%"><iframe allow="fullscreen;autoplay" allowfullscreen height="25%" src="https://streamable.com/e/fzzvlw?autoplay=1" width="auto" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>
     
-<h2>聯繫方式</h2>
+
+      <div id="waline">留言區域</div>
+  <div id="article-info">
+  當前瀏覽量: <span class="waline-pageview-count" data-path="<Your/Path/Name>" />
+</div>
+
+    <!-- Valine评论系统 -->
+<div id="waline"></div>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+    init({
+      el: '#waline',
+      serverURL: 'https://message-eight-gules.vercel.app',
+        lang:'zh-TW',
+        meta:['nick'],
+        requiredMeta:['nick'],
+        login:'disable',
+        copyright:false,
+        pageview: true,
+        comment: true,
+        
+        
+    });
+  </script>
+<div class="contact-info">
+  <h2>聯繫方式</h2>
   <h2>老吳</h2>
   
   <p><strong>Line:</strong> <a href="https://line.me/ti/p/5001120">5001120</a></p>
   <!-- 确保Line链接是正确的 -->
 </div>
-
+</div>
 <div class="overlay" id="overlay"></div>
 
 <script>
@@ -165,7 +217,7 @@ updateDateTime(); // 初始化时钟
   let expandedImg = null;
   const overlay = document.getElementById('overlay');
 
-  document.querySelectorAll('.image').forEach(img => {
+  document.querySelectorAll('.carousel img').forEach(img => {
     img.addEventListener('click', function() {
       if (expandedImg === this) {
         this.classList.remove('expanded');
@@ -198,7 +250,31 @@ overlay.addEventListener('click', function() {
     }
   });
 
+var images = document.querySelectorAll('.carousel img');
+  
 
+  function cycle() {
+    var current = document.querySelector('.carousel img.active');
+    if (current) current.classList.remove('active');
+    var nextIndex = Array.from(images).indexOf(current) + 1;
+    images[nextIndex % images.length].classList.add('active');
+  }
+
+  intervalId = setInterval(cycle, 8000);
+
+  expandedImg.addEventListener('click', function() {
+    this.style.display = 'none';
+    clearInterval(intervalId);
+    cycle(); // 恢复轮播
+  });
+
+  images.forEach(function(img, index) {
+    img.addEventListener('click', function() {
+      clearInterval(intervalId); // 停止轮播
+      expandedImg.style.backgroundImage = 'url(' + img.src + ')';
+      expandedImg.style.display = 'block';
+    });
+  });
 </script>
 
 </body>
